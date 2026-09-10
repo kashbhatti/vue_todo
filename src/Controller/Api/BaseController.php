@@ -6,13 +6,35 @@ namespace App\Controller\Api;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
-class BaseController extends AbstractController
+abstract class BaseController extends AbstractController
 {
-    #[Route('/base')]
-    public function index(): Response
+    public function success($data, string $message, int $status = Response::HTTP_OK): JsonResponse
     {
-        return $this->render('base/index.html.twig');
+        $response = [
+            'success' => true,
+            'data'    => $data,
+            'message' => $message,
+        ];
+
+        return $this->json($response, $status);
+    }
+
+    /**
+     * return error response.
+     */
+    public function error(string $error, array $errorMessages = [], string $code = Response::HTTP_INTERNAL_SERVER_ERROR): JsonResponse
+    {
+        $response = [
+            'success' => false,
+            'message' => $error,
+        ];
+
+        if (!empty($errorMessages)) {
+            $response['data'] = $errorMessages;
+        }
+
+        return $this->json($response, $code);
     }
 }
