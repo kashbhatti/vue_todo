@@ -1,4 +1,37 @@
+<div class="w-1/3">
+{{ form_errors(form) }}
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+
+<twig:TextInput for="{{ form.name.vars.id }}"
+            id="{{ form.name.vars.id }}"
+            name="{{ form.name.vars.full_name }}"
+            class="form-control"
+            label="{{ form.name.vars.label }}"
+            placeholder="{{ form.name.vars.attr.placeholder }}"
+            type="{{ form.name.vars.attr.type }}"
+            value="{{ form.name.vars.value }}"
+            maxlength="{{ form.name.vars.attr.maxlength }}"
+            errors="{{ form.name.vars.errors }}"
+            required="{{ form.name.vars.required ? 'required' }}"
+/>
+
+    {% if form.isComplete is defined and form.vars.data and form.vars.data.id %}
+        <twig:Checkbox
+            id="{{ form.isComplete.vars.id }}"
+            name="{{ form.isComplete.vars.full_name }}"
+            label="{{ form.isComplete.vars.label }}"
+            checked="{{ form.isComplete.vars.checked }}"
+        />
+        {% do form.isComplete.setRendered() %}
+    {% endif %}
+
+    <twig:AdminButton
+        label="{{ button_label|default('Save') }}"
+        type="submit"
+        class="my-4"
+    />
+
+{% do form.name.setRendered() %}
+
 {{ form_end(form) }}
+</div>

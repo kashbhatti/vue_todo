@@ -1,0 +1,11 @@
+{% if span is not null %}
+    <span class="{{ class }} text-sm [:where(&)]:text-zinc-500 [:where(&)]:dark:text-white/70">
+{% else %}
+    <p class="{{ class }} text-sm [:where(&)]:text-zinc-500 [:where(&)]:dark:text-white/70">
+{% endif %}
+    {% block content %}{% endblock %}
+{% if span is not null %}
+    </span>
+{% else %}
+    </p>
+{% endif %}

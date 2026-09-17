@@ -1,3 +1,11 @@
-<div{{ attributes }}>
-    <!-- component HTML -->
+<div class="my-4">
+    <label for="{{ for }}" class="block text-sm/6 font-medium text-gray-900 dark:text-white">{{ label }}</label>
+    <div class="mt-2">
+        <input id="{{ id }}" type="{{ type }}" name="{{ name }}" value="{{ value }}" autocomplete="{{ autocomplete }}" placeholder="{{ placeholder }}" class="{{ class }} block w-full rounded-md bg-white px-3 py-1.5 text-base placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:placeholder:text-gray-500 dark:focus:outline-indigo-500" {{ required }} {{ autofocus }} />
+        {% if errors is not null %}
+            <div class="mt-1 font-medium text-sm text-red-600 dark:text-red-400">
+                {{ errors }}
+            </div>
+        {% endif %}
+    </div>
 </div>

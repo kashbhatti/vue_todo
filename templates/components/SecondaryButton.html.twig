@@ -1,0 +1,9 @@
+{% if href is not null %}
+    <button onclick="window.open('{{ href }}', '_self')" class="{{ class }} hover:cursor-pointer rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-xs inset-ring inset-ring-gray-300 hover:bg-gray-50 dark:bg-white/10 dark:text-white dark:shadow-none dark:inset-ring-white/5 dark:hover:bg-white/20" type="{{ type }}">
+        {{ text }}
+    </button>
+{% else %}
+    <button class="{{ class }} hover:cursor-pointer rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-xs inset-ring inset-ring-gray-300 hover:bg-gray-50 dark:bg-white/10 dark:text-white dark:shadow-none dark:inset-ring-white/5 dark:hover:bg-white/20" type="{{ type }}">
+        {{ text }}
+    </button>
+{% endif %}

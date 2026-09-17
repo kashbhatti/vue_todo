@@ -1,19 +1,81 @@
-{% extends 'base.html.twig' %}
+{% extends 'auth.html.twig' %}
 
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
+<div class="flex flex-col gap-6">
+    <twig:Heading class="text-center">Register</twig:Heading>
+    <twig:SubHeading class="text-center">Enter your details below to create your account</twig:SubHeading>
+
+    {% if app.user %}
+        <twig:Text class="mb-3">
+            You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_task_index') }}">Visit Home</a>
+        </twig:Text>
+    {% endif %}
 
     {{ form_errors(registrationForm) }}
 
     {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
 
-        <button type="submit" class="btn">Register</button>
+    <twig:Input for="{{ registrationForm.name.vars.id }}"
+                id="{{ registrationForm.name.vars.id }}"
+                type="{{ registrationForm.name.vars.attr.type }}"
+                name="{{ registrationForm.name.vars.full_name }}"
+                class="form-control"
+                label="{{ registrationForm.name.vars.label }}"
+                placeholder="{{ registrationForm.name.vars.attr.placeholder }}"
+                value="{{ registrationForm.name.vars.value }}"
+                autocomplete="{{ registrationForm.name.vars.attr.autocomplete }}"
+                errors="{{ registrationForm.name.vars.errors }}"
+                required="{{ registrationForm.name.vars.required ? 'required' }}"
+    />
+
+    <twig:Input for="{{ registrationForm.email.vars.id }}"
+                id="{{ registrationForm.email.vars.id }}"
+                type="{{ registrationForm.email.vars.attr.type|default('email') }}"
+                name="{{ registrationForm.email.vars.full_name }}"
+                class="form-control"
+                label="{{ registrationForm.email.vars.label }}"
+                placeholder="{{ registrationForm.email.vars.attr.placeholder }}"
+                value="{{ registrationForm.email.vars.value }}"
+                autocomplete="{{ registrationForm.email.vars.attr.autocomplete }}"
+                errors="{{ registrationForm.email.vars.errors }}"
+                required="{{ registrationForm.email.vars.required ? 'required' }}"
+    />
+
+    <twig:Input for="{{ registrationForm.plainPassword.first.vars.id }}"
+                id="{{ registrationForm.plainPassword.first.vars.id }}"
+                type="{{ registrationForm.plainPassword.first.vars.attr.type }}"
+                name="{{ registrationForm.plainPassword.first.vars.full_name }}"
+                class="form-control"
+                label="{{ registrationForm.plainPassword.first.vars.label }}"
+                placeholder="{{ registrationForm.plainPassword.first.vars.attr.placeholder }}"
+                value="{{ registrationForm.plainPassword.first.vars.value }}"
+                autocomplete="{{ registrationForm.plainPassword.first.vars.attr.autocomplete }}"
+                required="{{ registrationForm.plainPassword.first.vars.required ? 'required' }}"
+                errors="{{ registrationForm.plainPassword.first.vars.errors }}"
+    />
+
+    <twig:Input for="{{ registrationForm.plainPassword.second.vars.id }}"
+                id="{{ registrationForm.plainPassword.second.vars.id }}"
+                type="{{ registrationForm.plainPassword.second.vars.attr.type }}"
+                name="{{ registrationForm.plainPassword.second.vars.full_name }}"
+                class="form-control"
+                label="{{ registrationForm.plainPassword.second.vars.label }}"
+                placeholder="{{ registrationForm.plainPassword.second.vars.attr.placeholder }}"
+                value="{{ registrationForm.plainPassword.second.vars.value }}"
+                autocomplete="{{ registrationForm.plainPassword.second.vars.attr.autocomplete }}"
+                required="{{ registrationForm.plainPassword.second.vars.required ? 'required' }}"
+                errors="{{ registrationForm.plainPassword.second.vars.errors }}"
+    />
+    {% do registrationForm.name.setRendered() %}
+    {% do registrationForm.email.setRendered() %}
+    {% do registrationForm.plainPassword.setRendered() %}
+
+    <twig:Button class="mt-2" type="submit" text="Create account" />
+    <twig:Text class="mt-2 text-center">
+        Already have an account? <a href="{{ path('app_login') }}">Log in</a>
+    </twig:Text>
     {{ form_end(registrationForm) }}
+</div>
 {% endblock %}

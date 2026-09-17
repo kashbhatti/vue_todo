@@ -1,0 +1,76 @@
+body {
+    background-color: oklch(96.7% 0.003 264.542);
+    color: oklch(27.8% 0.033 256.848);
+    @media (prefers-color-scheme: dark) {
+        background-color: oklch(21% 0.034 264.665);
+        color: oklch(92% 0.004 286.32);
+    }
+}
+
+.main {
+    .table--type-task {
+        th {
+            padding: 1rem;
+            text-align: left;
+        }
+        td {
+            padding: 1rem;
+            text-align: left;
+        }
+    }
+
+    a {
+        color: oklch(21% 0.034 264.665);
+        @media (prefers-color-scheme: dark) {
+            color: oklch(96.7% 0.001 286.375);
+        }
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+.sidebar {
+    a:hover {
+        text-decoration: none;
+    }
+}
+
+@keyframes notification-in-out {
+    0% {
+        opacity: 0;
+        transform: translateY(1rem);
+    }
+    11% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    78% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-0.5rem);
+    }
+}
+
+@keyframes notification-close {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-0.5rem);
+    }
+}
+
+.notification-panel {
+    animation: notification-in-out 4.5s ease forwards;
+
+    &.is-closing {
+        animation: notification-close 0.25s ease forwards;
+    }
+}

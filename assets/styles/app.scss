@@ -1,0 +1,13 @@
+.auth-panel {
+    a {
+        color: black;
+
+        &:hover {
+            text-decoration: underline;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            color: white;
+        }
+    }
+}

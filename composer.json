@@ -7,9 +7,10 @@
         "php": ">=8.4",
         "ext-ctype": "*",
         "ext-iconv": "*",
-        "doctrine/doctrine-bundle": "^3.3",
+        "doctrine/dbal": "*",
+        "doctrine/doctrine-bundle": "*",
         "doctrine/doctrine-migrations-bundle": "^4.0",
-        "doctrine/orm": "^3.7",
+        "doctrine/orm": "*",
         "phpdocumentor/reflection-docblock": "^6.0",
         "phpstan/phpdoc-parser": "^2.3",
         "symfony/asset": "8.1.*",
@@ -39,15 +40,18 @@
         "symfony/twig-bundle": "8.1.*",
         "symfony/ux-turbo": "^3.4",
         "symfony/ux-twig-component": "^3.4",
+        "symfony/ux-vue": "^3.4",
         "symfony/validator": "8.1.*",
         "symfony/web-link": "8.1.*",
         "symfony/yaml": "8.1.*",
+        "symfonycasts/sass-bundle": "^0.10.0",
         "symfonycasts/tailwind-bundle": "^1.0",
         "twig/extra-bundle": "^2.12|^3.0",
         "twig/twig": "^2.12|^3.0"
     },
     "config": {
         "allow-plugins": {
+            "pestphp/pest-plugin": true,
             "php-http/discovery": true,
             "symfony/flex": true,
             "symfony/runtime": true
@@ -100,12 +104,15 @@
         }
     },
     "require-dev": {
-        "phpunit/phpunit": "^13.3",
+        "dama/doctrine-test-bundle": "^8.6",
+        "doctrine/doctrine-fixtures-bundle": "^4.3",
+        "pestphp/pest": "^5.2",
         "symfony/browser-kit": "8.1.*",
         "symfony/css-selector": "8.1.*",
         "symfony/debug-bundle": "8.1.*",
         "symfony/maker-bundle": "^1.67",
         "symfony/stopwatch": "8.1.*",
-        "symfony/web-profiler-bundle": "8.1.*"
+        "symfony/web-profiler-bundle": "8.1.*",
+        "zenstruck/foundry": "^2.13"
     }
 }

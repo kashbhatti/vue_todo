@@ -3,14 +3,14 @@
 {% block title %}Task index{% endblock %}
 
 {% block body %}
-    <h1>Task index</h1>
+    <twig:Heading class="text-center">Task index</twig:Heading>
 
-    <table class="table">
+    <table class="table table--type-task">
         <thead>
             <tr>
                 <th>Id</th>
                 <th>Name</th>
-                <th>Is_complete</th>
+                <th>Is complete</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -21,17 +21,23 @@
                 <td>{{ task.name }}</td>
                 <td>{{ task.isComplete ? 'Yes' : 'No' }}</td>
                 <td>
+                    {% if app.user and task.user and app.user.id == task.user.id %}
                     <a href="{{ path('app_task_show', {'id': task.id}) }}">show</a>
-                    <a href="{{ path('app_task_edit', {'id': task.id}) }}">edit</a>
+                    |&nbsp;<a href="{{ path('app_task_edit', {'id': task.id}) }}">edit</a>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="4">no records found</td>
+                <td colspan="4">
+                    no records found
+                </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_task_new') }}">Create new</a>
+    <div class="w-40 mt-6">
+        <twig:Button type="button" text="Create new" href="{{ path('app_task_new') }}" />
+    </div>
 {% endblock %}

@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\DBAL\Types\Types;
 
 #[ORM\Entity(repositoryClass: TaskRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Task
 {
     #[ORM\Id]
@@ -19,8 +20,8 @@ class Task
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column]
-    private ?bool $is_complete = null;
+    #[ORM\Column(options: ['default' => false])]
+    private bool $isComplete = false;
 
     #[ORM\ManyToOne(cascade: ['persist'], inversedBy: 'tasks')]
     #[ORM\JoinColumn(nullable: false)]
@@ -32,9 +33,27 @@ class Task
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'likes')]
     private Collection $likes;
 
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
+    public ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
+    public ?\DateTimeImmutable $updatedAt = null;
+
+    #[ORM\PrePersist]
+    public function onPrePersist(): void
+    {
+        $this->createdAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable();
+    }
+
+    #[ORM\PreUpdate]
+    public function onPreUpdate(): void
+    {
+        $this->updatedAt = new \DateTimeImmutable();
+    }
+
     public function __construct()
     {
-        $this->is_complete = false;
         $this->likes = new ArrayCollection();
     }
 
@@ -55,14 +74,14 @@ class Task
         return $this;
     }
 
-    public function isComplete(): ?bool
+    public function isComplete(): bool
     {
-        return $this->is_complete;
+        return $this->isComplete;
     }
 
-    public function setIsComplete(bool $is_complete): static
+    public function setIsComplete(bool $isComplete): static
     {
-        $this->is_complete = $is_complete;
+        $this->isComplete = $isComplete;
 
         return $this;
     }

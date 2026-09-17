@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-ChildItem -Path \"M:\\\\www\\\\symfony\\\\vue_todo\" -Directory)",
+      "Bash(Select-Object Name)",
+      "Bash(Get-ChildItem -Path \"M:\\\\www\\\\symfony\\\\vue_todo\\\\config\\\\routes\" -ErrorAction SilentlyContinue)"
+    ]
+  }
+}

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Task;
+use App\Entity\User;
 use App\Form\TaskType;
 use App\Repository\TaskRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -20,7 +21,7 @@ final class TaskController extends AbstractController
     public function index(TaskRepository $taskRepository): Response
     {
         return $this->render('task/index.html.twig', [
-            'tasks' => $taskRepository->findAll(),
+            'tasks' => $taskRepository->findBy(['user' => $this->getUser()]),
         ]);
     }
 
@@ -33,6 +34,9 @@ final class TaskController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /** @var User $user */
+            $user = $this->getUser();
+            $task->setUser($user);
             $entityManager->persist($task);
             $entityManager->flush();
 
@@ -49,6 +53,11 @@ final class TaskController extends AbstractController
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
     public function show(Task $task): Response
     {
+        $canShow = $task->getUser() === $this->getUser();
+        if (!$canShow) {
+            return $this->redirectToRoute('app_task_index', [], Response::HTTP_SEE_OTHER);
+        }
+
         return $this->render('task/show.html.twig', [
             'task' => $task,
         ]);
@@ -58,6 +67,11 @@ final class TaskController extends AbstractController
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
     public function edit(Request $request, Task $task, EntityManagerInterface $entityManager): Response
     {
+        $canEdit = $task->getUser() === $this->getUser();
+        if (!$canEdit) {
+            return $this->redirectToRoute('app_task_index', [], Response::HTTP_SEE_OTHER);
+        }
+
         $form = $this->createForm(TaskType::class, $task);
         $form->handleRequest($request);
 
@@ -77,6 +91,11 @@ final class TaskController extends AbstractController
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
     public function delete(Request $request, Task $task, EntityManagerInterface $entityManager): Response
     {
+        $canDelete = $task->getUser() === $this->getUser();
+        if (!$canDelete) {
+            return $this->redirectToRoute('app_task_index', [], Response::HTTP_SEE_OTHER);
+        }
+
         if ($this->isCsrfTokenValid('delete'.$task->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($task);
             $entityManager->flush();
